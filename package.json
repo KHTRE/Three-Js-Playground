@@ -24,7 +24,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy" : "npm run build",
+    "deploy" : "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -45,6 +47,8 @@
     ]
   },
   "devDependencies": {
-    "@types/three": "^0.149.0"
-  }
+    "@types/three": "^0.149.0",
+    "gh-pages": "^5.0.0"
+  },
+  "homepage": "http://KHTRE.github.io/Three-Js-Playground"
 }
