@@ -83,9 +83,7 @@ const Weather: React.FC<Props> = () => {
   const divRef = useRef<HTMLDivElement>(null);
 
   const gltfLoader = new GLTFLoader(); 
-
-
-
+  const rgbeLoader = new RGBELoader();
 
   const generateWeatherForTheDay = (): WeatherType => {
     const randomNumber = Math.round(Math.random()*4);
@@ -118,11 +116,56 @@ const Weather: React.FC<Props> = () => {
   const test = generateWeatherForTheDay();
   console.log(test);
 
-
-
   useEffect(() => {
     const renderer = createRenderer(divRef.current);
-    const rgbeLoader = new RGBELoader();
+
+    // setting HDRI background texture
+    rgbeLoader.load(SkyHDRISharp, 
+      ( hdrmap: any ) => {        
+        setLoaders(prev => ({...prev, rgbe: false}));
+
+        hdrmap.mapping = THREE.EquirectangularReflectionMapping;
+        scene.background = hdrmap;
+        scene.environment = hdrmap;
+
+        let generator = new THREE.PMREMGenerator(renderer);
+        let envmap = generator.fromEquirectangular(hdrmap);
+        // const ballMaterial = {
+        //   // ...
+        //   envMap: envmap.texture
+        // };
+
+        setEnvMap(envmap.texture);
+      }, 
+      () => {
+        setLoaders(prev => ({...prev, rgbe: true}));
+      },      
+    );
+
+    let monday: Group; 
+
+    gltfLoader.load(Monday, 
+      function ( object: any ) {
+        setLoaders(prev => ({...prev, gltf: false}));
+        const damascusMaterial = makeDamascusMaterial(envMap);
+        const marbleMaterial = makeDamascusMaterial(envMap);
+    
+        object.scene.traverse(function (child: THREE.Mesh) {
+          if (child instanceof THREE.Mesh) {
+            child.material = damascusMaterial;
+          }
+        });
+  
+        object.scene.children[0].geometry.applyMatrix4( new THREE.Matrix4().makeTranslation( 0, 1, 0 ) ); // moove the geometry. pivot will stay
+        rotateObject(object.scene, 'x', 90); 
+        setMonday(object.scene.position);
+        scene.add( object.scene );
+        monday = object.scene;
+      },
+      () => {
+        setLoaders(prev => ({...prev, gltf: true}));
+      },  
+    );
 
     const scene = createScene();
     const camera = createCamera();
@@ -141,10 +184,6 @@ const Weather: React.FC<Props> = () => {
     light.position.x = 7;
 
     scene.add(light);
-    // const controls = new TrackballControls(camera, renderer.domElement);
-    // controls.rotateSpeed = 7.0;
-    // controls.minDistance = 1;
-    // controls.maxDistance = 7;
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.rotateSpeed = 0.5;
@@ -197,56 +236,7 @@ const Weather: React.FC<Props> = () => {
       oldX = ev.x;
       oldY = ev.y;
     };
-
-
-    // setting HDRI background texture
-    rgbeLoader.load(SkyHDRISharp, 
-      ( hdrmap: any ) => {        
-        setLoaders(prev => ({...prev, rgbe: false}));
-
-        hdrmap.mapping = THREE.EquirectangularReflectionMapping;
-        scene.background = hdrmap;
-        scene.environment = hdrmap;
-
-        let generator = new THREE.PMREMGenerator(renderer);
-        let envmap = generator.fromEquirectangular(hdrmap);
-        // const ballMaterial = {
-        //   // ...
-        //   envMap: envmap.texture
-        // };
-
-        setEnvMap(envmap.texture);
-      }, 
-      () => {
-        setLoaders(prev => ({...prev, rgbe: true}));
-      },      
-      );
-
-
-    let monday: Group; 
-
-    gltfLoader.load(Monday, 
-      function ( object: any ) {
-        setLoaders(prev => ({...prev, gltf: false}));
-        const damascusMaterial = makeDamascusMaterial(envMap);
-        const marbleMaterial = makeDamascusMaterial(envMap);
-    
-        object.scene.traverse(function (child: THREE.Mesh) {
-          if (child instanceof THREE.Mesh) {
-            child.material = damascusMaterial;
-          }
-        });
-  
-        object.scene.children[0].geometry.applyMatrix4( new THREE.Matrix4().makeTranslation( 0, 1, 0 ) ); // moove the geometry. pivot will stay
-        rotateObject(object.scene, 'x', 90); 
-        setMonday(object.scene.position);
-        scene.add( object.scene );
-        monday = object.scene;
-      },
-      () => {
-        setLoaders(prev => ({...prev, gltf: true}));
-      },  
-    );
+   
 
 
     animate((time) => {
