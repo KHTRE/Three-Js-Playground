@@ -20,6 +20,7 @@ import Monday from '../models/days/Monday.glb';
 import { makeDamascusMaterial } from '../materials/damascus';
 import { Group, Texture } from 'three';
 import { makeMarbleMaterial } from '../materials/marble';
+import LoadingSpinner from './LoadingSpinner';
 
 
 const styles = {
@@ -270,9 +271,7 @@ const Weather: React.FC<Props> = () => {
 
   return (
     <div>
-      {somethingIsLoading &&<div css={styles.loader}>
-        something is still loading
-      </div>}
+      <LoadingSpinner isLoading={somethingIsLoading}/>
       
 
       <div ref={divRef} css={styles.three}/>
