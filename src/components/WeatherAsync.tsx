@@ -104,19 +104,19 @@ const generateWeatherForTheDay = (): WeatherType => {
 
 
 const WeatherAsync: React.FC<Props> = () => {
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const divRef = useRef<HTMLDivElement>(null);
   
   const loadingManager = new THREE.LoadingManager();
   loadingManager.onStart = (url, itemsLoaded, itemsTotal ) => {
     console.log( 'Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' );
-    // setLoading(true);
+    setLoading(true);
   };
 
   loadingManager.onLoad = () => {
     console.log( 'Loading complete!');
-    // setLoading(false);
+    setLoading(false);
   };
 
   const gltfLoader = new GLTFLoader(loadingManager); 
@@ -133,11 +133,6 @@ const WeatherAsync: React.FC<Props> = () => {
     const render = () => {
       renderer.render( scene, camera );  
     }
-
-    const onInit = () => {
-      render();
-      setLoading(false);
-    };
 
     const onWindowResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
@@ -208,7 +203,7 @@ const WeatherAsync: React.FC<Props> = () => {
       });
     };
 
-    init().then( onInit );
+    init().then( render );
 
   }, [divRef]);
 
