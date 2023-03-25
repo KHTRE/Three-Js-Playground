@@ -275,7 +275,7 @@ const Weather: React.FC<Props> = () => {
       </div>}
       
 
-      <div ref={divRef} css={styles.three}/>
+      {!somethingIsLoading && <div ref={divRef} css={styles.three}/>}
     </div>    
   );
 }
