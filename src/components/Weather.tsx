@@ -78,16 +78,27 @@ enum Days {
 const Weather: React.FC<Props> = () => {
   const [envMap, setEnvMap] = useState<Texture | undefined>();
   const [monday, setMonday] = useState();
-  const [loaders, setLoaders] = useState<{[key: string]: boolean}>({});
+  const [loading, setLoading] = useState<boolean>(false);
 
   const divRef = useRef<HTMLDivElement>(null);
+  
+  const manager = new THREE.LoadingManager();
+  manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
+    console.log( 'Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' );
+    setLoading(true);
+  };
 
-  const gltfLoader = new GLTFLoader(); 
-  const rgbeLoader = new RGBELoader();
+  manager.onLoad = function ( ) {
+    console.log( 'Loading complete!');
+    setLoading(false);
+  };
+
+  const gltfLoader = new GLTFLoader(manager); 
+  const rgbeLoader = new RGBELoader(manager);
 
   const generateWeatherForTheDay = (): WeatherType => {
     const randomNumber = Math.round(Math.random()*4);
-    console.log(randomNumber);
+
     let conditions = Conditions.Sunny;
 
     switch (randomNumber) {
@@ -113,8 +124,6 @@ const Weather: React.FC<Props> = () => {
     };
   };
 
-  const test = generateWeatherForTheDay();
-  console.log(test);
 
   useEffect(() => {
     const renderer = createRenderer(divRef.current);
@@ -122,8 +131,6 @@ const Weather: React.FC<Props> = () => {
     // setting HDRI background texture
     rgbeLoader.load(SkyHDRISharp, 
       ( hdrmap: any ) => {        
-        setLoaders(prev => ({...prev, rgbe: false}));
-
         hdrmap.mapping = THREE.EquirectangularReflectionMapping;
         scene.background = hdrmap;
         scene.environment = hdrmap;
@@ -136,17 +143,14 @@ const Weather: React.FC<Props> = () => {
         // };
 
         setEnvMap(envmap.texture);
-      }, 
-      () => {
-        setLoaders(prev => ({...prev, rgbe: true}));
       },      
     );
 
     let monday: Group; 
 
     gltfLoader.load(Monday, 
-      function ( object: any ) {
-        setLoaders(prev => ({...prev, gltf: false}));
+      ( object: any ) => {
+        // setLoaders(prev => ({...prev, gltf: false}));
         const damascusMaterial = makeDamascusMaterial(envMap);
         const marbleMaterial = makeDamascusMaterial(envMap);
     
@@ -162,9 +166,6 @@ const Weather: React.FC<Props> = () => {
         scene.add( object.scene );
         monday = object.scene;
       },
-      () => {
-        setLoaders(prev => ({...prev, gltf: true}));
-      },  
     );
 
     const scene = createScene();
@@ -255,13 +256,9 @@ const Weather: React.FC<Props> = () => {
     });
   }, [divRef]);
 
-  const somethingIsLoading = Object.values(loaders).some(value => value === true);
-
-  console.log(loaders)
-
   return (
     <div>
-      <LoadingSpinner isLoading={somethingIsLoading}/>
+      <LoadingSpinner isLoading={loading}/>
       
 
       <div ref={divRef} css={styles.three}/>
