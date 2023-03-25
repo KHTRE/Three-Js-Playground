@@ -71,58 +71,57 @@ enum Days {
   SUNDAY = 'sunday',
 };
 
+const generateWeatherForTheDay = (): WeatherType => {
+  const randomNumber = Math.round(Math.random()*4);
+
+  let conditions = Conditions.Sunny;
+
+  switch (randomNumber) {
+    case 1:
+      conditions = Conditions.Sunny;
+      break;
+    case 2:
+      conditions = Conditions.Snowing;
+      break;
+    case 3:
+      conditions = Conditions.Clouds;
+      break;
+    case 4:
+      conditions = Conditions.Rain;
+      break;
+  }
+
+  return {
+    temp: Math.round(Math.random()*24),
+    conditions: conditions,
+    pressure: Math.round(Math.random()*1000),
+    wind: Math.round(Math.random()*24),
+  };
+};
+
 
 
 
 
 const Weather: React.FC<Props> = () => {
   const [envMap, setEnvMap] = useState<Texture | undefined>();
-  const [monday, setMonday] = useState();
   const [loading, setLoading] = useState<boolean>(false);
 
   const divRef = useRef<HTMLDivElement>(null);
   
-  const manager = new THREE.LoadingManager();
-  manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
+  const loadingManager = new THREE.LoadingManager();
+  loadingManager.onStart = function ( url, itemsLoaded, itemsTotal ) {
     console.log( 'Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' );
     setLoading(true);
   };
 
-  manager.onLoad = function ( ) {
+  loadingManager.onLoad = function ( ) {
     console.log( 'Loading complete!');
     setLoading(false);
   };
 
-  const gltfLoader = new GLTFLoader(manager); 
-  const rgbeLoader = new RGBELoader(manager);
-
-  const generateWeatherForTheDay = (): WeatherType => {
-    const randomNumber = Math.round(Math.random()*4);
-
-    let conditions = Conditions.Sunny;
-
-    switch (randomNumber) {
-      case 1:
-        conditions = Conditions.Sunny;
-        break;
-      case 2:
-        conditions = Conditions.Snowing;
-        break;
-      case 3:
-        conditions = Conditions.Clouds;
-        break;
-      case 4:
-        conditions = Conditions.Rain;
-        break;
-    }
-
-    return {
-      temp: Math.round(Math.random()*24),
-      conditions: conditions,
-      pressure: Math.round(Math.random()*1000),
-      wind: Math.round(Math.random()*24),
-    };
-  };
+  const gltfLoader = new GLTFLoader(loadingManager); 
+  const rgbeLoader = new RGBELoader(loadingManager);  
 
 
   useEffect(() => {
@@ -137,10 +136,6 @@ const Weather: React.FC<Props> = () => {
 
         let generator = new THREE.PMREMGenerator(renderer);
         let envmap = generator.fromEquirectangular(hdrmap);
-        // const ballMaterial = {
-        //   // ...
-        //   envMap: envmap.texture
-        // };
 
         setEnvMap(envmap.texture);
       },      
@@ -162,7 +157,6 @@ const Weather: React.FC<Props> = () => {
   
         object.scene.children[0].geometry.applyMatrix4( new THREE.Matrix4().makeTranslation( 0, 1, 0 ) ); // moove the geometry. pivot will stay
         rotateObject(object.scene, 'x', 90); 
-        setMonday(object.scene.position);
         scene.add( object.scene );
         monday = object.scene;
       },
