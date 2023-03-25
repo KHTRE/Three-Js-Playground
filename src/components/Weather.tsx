@@ -139,7 +139,7 @@ const Weather: React.FC<Props> = () => {
 
         setEnvMap(envmap.texture);
       },      
-    );
+    );    
 
     let monday: Group; 
 
@@ -231,6 +231,7 @@ const Weather: React.FC<Props> = () => {
       oldX = ev.x;
       oldY = ev.y;
     };
+
    
 
 
