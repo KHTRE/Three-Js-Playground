@@ -1,7 +1,6 @@
 {
   "name": "knife",
   "version": "0.1.0",
-  "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@testing-library/jest-dom": "^5.16.5",
@@ -53,5 +52,5 @@
     "@types/three": "^0.149.0",
     "gh-pages": "^5.0.0"
   },
-  "homepage": "http://KHTRE.github.io/Three-Js-Playground"
+  "homepage": "."
 }

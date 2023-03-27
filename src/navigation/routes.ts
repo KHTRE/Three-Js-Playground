@@ -8,8 +8,6 @@ export type Routes = {
   Box: string;
 }
 
-export const BASE_ROUTE = process.env.PUBLIC_URL;
-
 export const ROUTES: Routes = {
   Main: '/',
   Physics: '/physics',
