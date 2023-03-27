@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/Three-Js-Playground/static/css/main.e6c13ad2.css",
-    "main.js": "/Three-Js-Playground/static/js/main.81cdc2e0.js",
-    "static/js/787.d22bf315.chunk.js": "/Three-Js-Playground/static/js/787.d22bf315.chunk.js",
-    "static/media/HDR_029_Sky_Cloudy_Ref.hdr": "/Three-Js-Playground/static/media/HDR_029_Sky_Cloudy_Ref.cd855fdd4af37e5db12d.hdr",
-    "static/media/Monday.glb": "/Three-Js-Playground/static/media/Monday.31792712ba840df12b0d.glb",
-    "static/media/knife.glb": "/Three-Js-Playground/static/media/knife.ad76485c357048f703b8.glb",
-    "static/media/Metal_Damascus_Steel_001_basecolor.jpg": "/Three-Js-Playground/static/media/Metal_Damascus_Steel_001_basecolor.3afc68f92ac0d5e0a95d.jpg",
-    "static/media/room.jpg": "/Three-Js-Playground/static/media/room.6998c1ef26fa6a0c6aeb.jpg",
-    "static/media/Metal_Damascus_Steel_001_roughness.jpg": "/Three-Js-Playground/static/media/Metal_Damascus_Steel_001_roughness.883f12f54f97cdbdd663.jpg",
-    "static/media/Metal_Damascus_Steel_001_normal.jpg": "/Three-Js-Playground/static/media/Metal_Damascus_Steel_001_normal.1b5d11221f64f31054bc.jpg",
-    "index.html": "/Three-Js-Playground/index.html",
-    "main.e6c13ad2.css.map": "/Three-Js-Playground/static/css/main.e6c13ad2.css.map",
-    "main.81cdc2e0.js.map": "/Three-Js-Playground/static/js/main.81cdc2e0.js.map",
-    "787.d22bf315.chunk.js.map": "/Three-Js-Playground/static/js/787.d22bf315.chunk.js.map"
+    "main.css": "/static/css/main.e6c13ad2.css",
+    "main.js": "/static/js/main.12c1f966.js",
+    "static/js/787.d22bf315.chunk.js": "/static/js/787.d22bf315.chunk.js",
+    "static/media/HDR_029_Sky_Cloudy_Ref.hdr": "/static/media/HDR_029_Sky_Cloudy_Ref.cd855fdd4af37e5db12d.hdr",
+    "static/media/Monday.glb": "/static/media/Monday.31792712ba840df12b0d.glb",
+    "static/media/knife.glb": "/static/media/knife.ad76485c357048f703b8.glb",
+    "static/media/Metal_Damascus_Steel_001_basecolor.jpg": "/static/media/Metal_Damascus_Steel_001_basecolor.3afc68f92ac0d5e0a95d.jpg",
+    "static/media/room.jpg": "/static/media/room.6998c1ef26fa6a0c6aeb.jpg",
+    "static/media/Metal_Damascus_Steel_001_roughness.jpg": "/static/media/Metal_Damascus_Steel_001_roughness.883f12f54f97cdbdd663.jpg",
+    "static/media/Metal_Damascus_Steel_001_normal.jpg": "/static/media/Metal_Damascus_Steel_001_normal.1b5d11221f64f31054bc.jpg",
+    "index.html": "/index.html",
+    "main.e6c13ad2.css.map": "/static/css/main.e6c13ad2.css.map",
+    "main.12c1f966.js.map": "/static/js/main.12c1f966.js.map",
+    "787.d22bf315.chunk.js.map": "/static/js/787.d22bf315.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.81cdc2e0.js"
+    "static/js/main.12c1f966.js"
   ]
 }
