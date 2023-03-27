@@ -168,6 +168,28 @@ const WeatherAsync: React.FC<Props> = () => {
       scene.add( monday );
 
 
+
+
+      // will make parallax effect
+      const windowHalfWidth = window.innerWidth / 2;
+      const windowHalfHeight = window.innerHeight / 2;
+      let oldX = windowHalfWidth;
+      let oldY = windowHalfHeight;
+
+      window.onmousemove = (ev) => {
+        let changeX = ev.x - oldX;
+        let changeY = ev.y - oldY;
+
+        camera.position.x += changeX / 8000;
+        camera.position.y -= changeY / 4000;
+
+        oldX = ev.x;
+        oldY = ev.y;
+      };
+
+
+
+
       const controls = new OrbitControls(camera, renderer.domElement);
       controls.rotateSpeed = 0.5;
       controls.minDistance = 1;
@@ -180,7 +202,6 @@ const WeatherAsync: React.FC<Props> = () => {
       //   renderer.domElement
       // );
 
-
       scene.add(new THREE.AxesHelper(5));
 
       const gridHelper = new THREE.GridHelper(10, 10, 0xaec6cf, 0xaec6cf)
@@ -188,6 +209,7 @@ const WeatherAsync: React.FC<Props> = () => {
       scene.add(gridHelper)
 
       window.addEventListener( 'resize', onWindowResize );
+
 
 
       animate((time) => {
