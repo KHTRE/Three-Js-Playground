@@ -203,9 +203,6 @@ const Physics: React.FC<Props> = () => {
     });
 
     document.addEventListener('keyup', (event) => {
-      const maxSteerVal = Math.PI / 8;
-      const maxForce = 10;
-
       switch (event.key) {
         case 'w':
         case 'ArrowUp':
