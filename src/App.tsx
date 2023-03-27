@@ -7,9 +7,10 @@ import Weather from './components/Weather';
 import WeatherAsync from './components/WeatherAsync';
 import {RouterProvider, BrowserRouter, Routes, Route} from "react-router-dom";
 import { router } from './navigation/router';
-import { ROUTES } from './navigation/routes';
+import { BASE_ROUTE, ROUTES } from './navigation/routes';
 import Main from './components/Main';
 
+console.log(process.env.PUBLIC_URL);
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
     //   <RouterProvider router={router} />
     // </>
     <div>
-      <BrowserRouter basename={ROUTES.Main}>
+      <BrowserRouter basename={BASE_ROUTE}>
         <Routes>
           <Route path={ROUTES.Main} element={<Main />}/>
           <Route path={ROUTES.Physics} element={<Physics />}/>

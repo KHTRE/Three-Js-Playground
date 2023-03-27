@@ -8,11 +8,11 @@ export type Routes = {
   Box: string;
 }
 
-const baseRoute = '/Three-Js-Playground'
+export const BASE_ROUTE = process.env.PUBLIC_URL;
 
 export const ROUTES: Routes = {
-  Main: baseRoute,
-  Physics: baseRoute + '/physics',
+  Main: '/',
+  Physics: '/physics',
   WeatherAsync: '/weather-async',
   Weather: '/weather',
   Clock: '/clock',
