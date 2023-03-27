@@ -5,15 +5,30 @@ import Knife from './components/Knife';
 import Physics from './components/Physics';
 import Weather from './components/Weather';
 import WeatherAsync from './components/WeatherAsync';
-import {RouterProvider} from "react-router-dom";
+import {RouterProvider, BrowserRouter, Routes, Route} from "react-router-dom";
 import { router } from './navigation/router';
+import { ROUTES } from './navigation/routes';
+import Main from './components/Main';
 
 
 function App() {
   return (
-    <>   
-      <RouterProvider router={router} />
-    </>
+    // <>   
+    //   <RouterProvider router={router} />
+    // </>
+    <div>
+      <BrowserRouter basename={ROUTES.Main}>
+        <Routes>
+          <Route path={ROUTES.Main} element={<Main />}/>
+          <Route path={ROUTES.Physics} element={<Physics />}/>
+          <Route path={ROUTES.Box} element={<Box />}/>
+          <Route path={ROUTES.Clock} element={<Clock />}/>
+          <Route path={ROUTES.Weather} element={<Weather />}/>
+          <Route path={ROUTES.WeatherAsync} element={<WeatherAsync />}/>
+          <Route path={ROUTES.Knife} element={<Knife />}/>
+        </Routes>      
+      </BrowserRouter>
+    </div>
   );
 }
 
